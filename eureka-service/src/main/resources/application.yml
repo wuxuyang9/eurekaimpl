@@ -1,0 +1,26 @@
+#SpringCloud配置中心，必须
+#当前Eureka版本：Greenwich.RC2 ---最新稳定版
+
+spring:
+  application:
+    name: app-eureka
+  security:
+    user:
+      name: springcloud
+      password: springcloud
+
+server:
+  port: 2001
+eureka:
+  server:
+    # 测试时关闭自我保护机制，保证不可用服务及时踢出
+    enable-self-preservation: false
+  instance:
+    hostname: 127.0.0.1
+    prefer-ip-address: true
+  client:
+    #表示是否将自己注册到Eureka Server，默认为true。由于当前这个应用就是Eureka Server，故而设为false
+    #register-with-eureka: false
+    service-url:
+      #设置与Eureka Server交互的地址，查询服务和注册服务都需要依赖这个地址。默认是http://localhost:8761/eureka ；多个地址可使用 , 分隔。
+      defaultZone: http://${eureka.instance.hostname}:2002/eureka/

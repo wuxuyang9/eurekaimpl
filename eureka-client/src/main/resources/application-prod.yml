@@ -1,0 +1,75 @@
+server:
+  port: 8020
+app:
+  # 数据库地址
+  database:
+    name: app-yunjinji
+    ip: gaia-without.mysql.rds.aliyuncs.com
+    username: yunjinli
+    password: yBBHBGhJv0AYAkHd
+  #id生成器snowflake算法的配置文件
+#  snowflake:
+#    #机器号 范围 0-31
+#    worker-id: 0
+#    #数据源 用于区分机器上不同应用  范围 0-31
+#    datacenter-id: 0
+spring:
+  redis:
+    # Redis数据库索引（默认为0）
+    database: 0
+    # Redis服务器地址
+    host: localhsot
+    # Redis服务器连接端口
+    port: 6379
+    # Redis服务器连接密码（默认为空）
+    password:
+    lettuce:
+      pool:
+        # 连接池最大连接数（使用负值表示没有限制）8
+        max-active: 8
+        # 连接池最大阻塞等待时间（使用负值表示没有限制）默认1
+        max-wait: 1
+        # 连接池中的最大空闲连接 默认8
+        max-idle: 8
+        # 连接池中的最小空闲连接 默认0
+        min-idle: 0
+    # 连接超时时间（毫秒）默认0
+    timeout: 0
+  application:
+    name: app-server
+#  profiles:
+#    #取值:server,dev,prod
+#    active: server,dev
+  datasource:
+    #使用druid连接池
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://${app.database.ip}/${app.database.name}?autoReconnect=true&allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    username: ${app.database.username}
+    password: ${app.database.password}
+    #数据驱动模块是自动注册，不用手动注册
+    #    driver-class-name: com.mysql.cj.jdbc.Driver
+    #    默认使用hikari连接池
+    #    type: com.zaxxer.hikari.HikariDataSource
+    #    hikari:
+    #      maximum-pool-size: 15
+    #      auto-commit: true
+    #      idle-timeout: 0
+    #      pool-name: DatebookHikariCP
+    #      max-lifetime: 0
+    #      connection-test-query: SELECT 1
+  jpa:
+    # 不让jap打印sql日志，让log4j2来打印
+    #    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  #    hibernate:
+  #      ddl-auto: update
+  #  jooq:
+  #    sql-dialect: org.hibernate.dialect.MySQLInnoDBDialect
+
+  #热部署功能
+  devtools:
+    restart:
+      enabled: true
+      additional-paths: src/main/java
