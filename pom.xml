@@ -19,7 +19,11 @@
 
     <modules>
         <module>eureka-service</module>
+        <module>eureka-service2</module>
+        <module>eureka-zuul</module>
         <module>app-common</module>
+        <module>eureka-client</module>
+        <module>eureka-consumer</module>
     </modules>
 
     <properties>

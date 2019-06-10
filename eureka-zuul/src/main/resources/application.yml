@@ -1,0 +1,50 @@
+#Zuul路由，SpringCloud路由管理服务
+#作用: 路由转发（反向代理）、限流、负载均衡
+# 需要启用
+#测试步骤:
+#1.start app-eureka
+#2.start app-zuul
+#3.start app-shopping
+#4.start app-server
+
+server:
+  port: 4001
+
+spring:
+  application:
+    name: app-zuul
+  # 启用SpringCloud配置中心服务
+  #cloud:
+   # config:
+    #  discovery:
+     #   service-id:
+      #profile: app-zuul
+      #label: master
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:2001/eureka/
+
+
+#--Example--:
+zuul:
+  routes:
+    # http://localhost:4001/xixi/hi?name=shabi
+    consumer:
+      path: /consumer/**
+      serviceId: app-consumer
+    client:
+      path: /client/**
+      serviceId: app-client
+#      貌似不能代理eureka
+#    eureka:
+#      path: /eureka/**
+#      serviceId: app-eureka
+#    api-b:
+#      path: /api-b/**
+#      serviceId: service-feign
+
+# 配置远程调用超时时间时，需要配置：ReadTimeout，SocketTimeout。
+ribbon:
+  ReadTimeout: 60000  # 单位毫秒数
+  SocketTimeout: 60000
